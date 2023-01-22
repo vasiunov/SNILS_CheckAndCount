@@ -1,3 +1,3 @@
-module github.com/vasiunov/features
+module snils/snils
 
 
