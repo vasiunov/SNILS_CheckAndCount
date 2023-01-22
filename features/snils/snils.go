@@ -2,7 +2,6 @@ package snils
 
 import (
 	"errors"
-	"fmt"
 	"strconv"
 	"strings"
 	"unicode"
@@ -13,13 +12,6 @@ import (
 	According to http://www.consultant.ru/document/cons_doc_LAW_142584/1d9155a863a5949b14b95ecbb536aa84856a2a2e/
 	Manual cheking SNILS http://portal.fss.ru:8585/fss/lgot/snils
 */
-
-func main() {
-
-	var Snils = "112-233-445 95" // checking string
-
-	fmt.Println(CheckAndCount(Snils)) // result
-}
 
 func CheckAndCount(snils string) (bool, error) {
 
@@ -47,9 +39,9 @@ func count(snils string) bool {
 	snilsLeft := snils[:11]
 	snilsLeft = strings.ReplaceAll(snilsLeft, "-", "")
 
-	var sum, controlSum int
+	var sum int
 
-	controlSum, _ = strconv.Atoi(string(snils[12:]))
+	controlSum, _ := strconv.Atoi(string(snils[12:]))
 
 	// fmt.Println("snilsLeft", snilsLeft) // 112233445
 	//									 i    012345678
