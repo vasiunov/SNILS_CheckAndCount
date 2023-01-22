@@ -1,4 +1,4 @@
-package main
+package snils
 
 import (
 	"errors"
@@ -18,10 +18,10 @@ func main() {
 
 	var Snils = "112-233-445 95" // checking string
 
-	fmt.Println(checkAndCountSNILS(Snils)) // result
+	fmt.Println(CheckAndCount(Snils)) // result
 }
 
-func checkAndCountSNILS(snils string) (bool, error) {
+func CheckAndCount(snils string) (bool, error) {
 
 	if len(snils) != 14 {
 		err := errors.New("неверная длина СНИЛС")
@@ -39,10 +39,10 @@ func checkAndCountSNILS(snils string) (bool, error) {
 		}
 	}
 
-	return countSnils(snils), nil
+	return count(snils), nil
 }
 
-func countSnils(snils string) bool {
+func count(snils string) bool {
 
 	snilsLeft := snils[:11]
 	snilsLeft = strings.ReplaceAll(snilsLeft, "-", "")
