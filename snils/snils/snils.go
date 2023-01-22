@@ -1,17 +1,11 @@
-package main
+package snils
 
 import (
 	"errors"
-	"fmt"
 	"strconv"
 	"strings"
 	"unicode"
 )
-
-func main() {
-
-	fmt.Println(CheckAndCount("112-233-445 95"))
-}
 
 /*
 	Realising Algorithm for generating the control number of the Insurance number
