@@ -1,4 +1,4 @@
-SNILS checkAndCount
+SNILS CheckAndCount
 ================================
 
 Realising Algorithm for generating the control number of the Insurance number (SNILS)
@@ -18,15 +18,15 @@ import (
 )
 func main() {
        
-	fmt.Println(snils.checkAndCount("112-233-445 95"))
-	fmt.Println(snils.checkAndCount("112-233-446 96"))
-	fmt.Println(snils.checkAndCount("112-243-445 00"))
-	fmt.Println(snils.checkAndCount("112-243-446 00"))
-	fmt.Println(snils.checkAndCount("112-243-447 01"))
-	fmt.Println(snils.checkAndCount("112-243-447 0w"))
-	fmt.Println(snils.checkAndCount("112-243-447 0"))
-	fmt.Println(snils.checkAndCount("112-243-447 023"))
-	fmt.Println(snils.checkAndCount("112-243-447 0ц"))
+	fmt.Println(snils.CheckAndCount("112-233-445 95"))
+	fmt.Println(snils.CheckAndCount("112-233-446 96"))
+	fmt.Println(snils.CheckAndCount("112-243-445 00"))
+	fmt.Println(snils.CheckAndCount("112-243-446 00"))
+	fmt.Println(snils.CheckAndCount("112-243-447 01"))
+	fmt.Println(snils.CheckAndCount("112-243-447 0w"))
+	fmt.Println(snils.CheckAndCount("112-243-447 0"))
+	fmt.Println(snils.CheckAndCount("112-243-447 023"))
+	fmt.Println(snils.CheckAndCount("112-243-447 0ц"))
 	
 }
 ```
