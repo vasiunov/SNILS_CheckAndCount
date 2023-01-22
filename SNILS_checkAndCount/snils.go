@@ -12,7 +12,7 @@ func CheckAndCount(snils string) (bool, error) {
 	// ADD: Проверка контрольного числа Страхового номера проводится только для номеров больше номера 001-001-998.
 
 	if len(snils) != 14 {
-		err := errors.New("неверная длина СНИЛС")
+		err := errors.New("неверная длинна СНИЛС")
 		return false, err
 	}
 
@@ -39,9 +39,9 @@ func count(snils string) bool {
 
 	controlSum, _ := strconv.Atoi(string(snils[12:]))
 
-	// fmt.Println("snilsLeft", snilsLeft) // 112233445
-	//									 i    012345678
-	// 							multiplier    987654321
+	// 112233445 - snils
+	// 012345678 - i
+	// 987654321 - multiplier
 	for i, value := range snilsLeft {
 
 		sum += int(value-'0') * (9 - i)
