@@ -1,54 +1,62 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"strconv"
 	"strings"
+	"unicode"
 )
 
 func main() {
 
-	var Snils = "112-233-445 95"
+	var Snils = "112-233-445 95" // checking string
 
-	checkSNILS(Snils)
-
-	fmt.Println(checkSNILS(Snils))
+	fmt.Println(checkAndCountSNILS(Snils)) // result
 }
 
-func checkSNILS(snils string) bool {
+func checkAndCountSNILS(snils string) (bool, error) {
+
+	if len(snils) != 14 {
+		err := errors.New("неверная длина СНИЛС")
+		return false, err
+	}
+
+	/*
+	   Есть ли готовая возможность задать маску для строки и проверять по ней?
+	   По аналогии с шаблоном для даты в пакете time
+	*/
+	for _, elem := range snils {
+		if unicode.IsLetter(elem) {
+			err := errors.New("недопустимый символ в СНИЛС")
+			return false, err
+		}
+	}
+
+	return countSnils(snils), nil
+}
+
+func countSnils(snils string) bool {
+
 	snilsLeft := snils[:11]
 	snilsLeft = strings.ReplaceAll(snilsLeft, "-", "")
 
-	fmt.Println("snilsLeft", snilsLeft) // 112233445
-	var sum, controlSum, intLeft, intLeftResult, intRight, intRightResult int
+	// fmt.Println("snilsLeft", snilsLeft) // 112233445
+	//									 i    012345678
+	// 							multiplier    987654321
 
-	for i := 0; i <= 4; i++ {
-		if i == 4 {
-			intEl, _ := strconv.Atoi(string(snils[9-i+1]))
-			sum += intEl * (9 - i)
+	var sum, controlSum int
 
-			controlSum, _ = strconv.Atoi(string(snils[12:]))
+	controlSum, _ = strconv.Atoi(string(snils[12:]))
 
-			// fmt.Println("sum =", sum)
-			// fmt.Println("controlSum =", controlSum)
+	for i, value := range snilsLeft {
 
-			if sum == controlSum {
-				return true
-			}
-
-		} else {
-
-			intLeft, _ = strconv.Atoi(string(snilsLeft[i]))
-			intLeftResult = intLeft * (9 - i)
-
-			intRight, _ = strconv.Atoi(string(snilsLeft[len(snilsLeft)-1-i]))
-			intRightResult = intRight * (1 + i)
-
-			sum += intLeftResult + intRightResult
-
-			// fmt.Println("sum =", sum)
-			// fmt.Println("i =", i)
-		}
+		sum += int(value-'0') * (9 - i)
 	}
+
+	if sum == controlSum {
+		return true
+	}
+
 	return false
 }
