@@ -16,10 +16,8 @@ func CheckAndCount(snils string) (bool, error) {
 		return false, err
 	}
 
-	/*
-	   Есть ли готовая возможность задать маску для строки и проверять по ней
-	   по аналогии с шаблоном для формата даты в пакете time?
-	*/
+	//  Q: Есть ли готовая возможность задать маску для строки по аналогии с time layouts?
+
 	for _, elem := range snils {
 		if unicode.IsLetter(elem) {
 			err := errors.New("недопустимый символ в СНИЛС")

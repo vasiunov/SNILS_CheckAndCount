@@ -14,19 +14,18 @@ package main
 import (
   "fmt"
   
-  "github.com/vasiunov/features"
+  "github.com/vasiunov/features/pkg/snils"
 )
 func main() {
        
-	fmt.Println(snils.CheckAndCount("112-233-445 95"))
-	fmt.Println(snils.CheckAndCount("112-233-446 96"))
-	fmt.Println(snils.CheckAndCount("112-243-445 00"))
-	fmt.Println(snils.CheckAndCount("112-243-446 00"))
-	fmt.Println(snils.CheckAndCount("112-243-447 01"))
-	fmt.Println(snils.CheckAndCount("112-243-447 0w"))
-	fmt.Println(snils.CheckAndCount("112-243-447 0"))
-	fmt.Println(snils.CheckAndCount("112-243-447 023"))
-	fmt.Println(snils.CheckAndCount("112-243-447 0ц"))
+	fmt.Println(snils.CheckAndCount("112-233-445 95")) // true <nil>
+	fmt.Println(snils.CheckAndCount("112-243-445 00")) // true <nil>
+	fmt.Println(snils.CheckAndCount("112-243-446 00")) // true <nil>
+	fmt.Println(snils.CheckAndCount("112-243-447 04")) // false <nil>
+	fmt.Println(snils.CheckAndCount("112-243-447 0w")) // false недопустимый символ в СНИЛС
+	fmt.Println(snils.CheckAndCount("112-243-447 0")) // false неверная длинна СНИЛС
+	fmt.Println(snils.CheckAndCount("112-243-447 023")) // false неверная длинна СНИЛС
+	fmt.Println(snils.CheckAndCount("112-243-447 0ц")) // false неверная длинна СНИЛС
 	
 }
 ```
