@@ -1,3 +1,9 @@
+/*
+Package snils Realising Algorithm of ckecking the control number of the Insurance number (SNILS).
+According to http://www.consultant.ru/document/cons_doc_LAW_142584/1d9155a863a5949b14b95ecbb536aa84856a2a2e/.
+Manual check SNILS http://portal.fss.ru:8585/fss/lgot/snils.
+Play code https://go.dev/play/p/IMrxtpMOagJ.
+*/
 package snils
 
 import (
@@ -14,7 +20,11 @@ type Checker interface {
 // type Snils contains string value
 type Snils string
 
-// CheckAndCount checks regexp validity and SNILS validity to regexp. Returns false and error (containing result of checking). Otherwise initiate method count()
+/*
+CheckAndCount checks regexp validity and SNILS validity to regexp.
+Returns false and error (containing result of checking).
+Otherwise initiate method count() which counts SNILS and compares it to checkSum returning bool
+*/
 func (s Snils) CheckAndCount() (bool, error) {
 
 	re, err := regexp.Compile(`^(\d{3})[ -]*(\d{3})[ -]*(\d{3})[ -]*(\d{2})\s*$`) // checking regexp validity
