@@ -12,7 +12,7 @@ import (
 	"strconv"
 )
 
-// Checker interface implements CheckAndCunt() (bool, error)
+// Checker interface implements CheckAndCount() (bool, error)
 type Checker interface {
 	CheckAndCount() (bool, error)
 }
