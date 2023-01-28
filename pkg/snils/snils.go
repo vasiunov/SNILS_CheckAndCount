@@ -6,12 +6,15 @@ import (
 	"strconv"
 )
 
+// Checker interface implements CheckAndCunt() (bool, error)
 type Checker interface {
 	CheckAndCount() (bool, error)
 }
 
+// type Snils contains string value
 type Snils string
 
+// CheckAndCount checks regexp validity and SNILS validity to regexp. Returns false and error (containing result of checking). Otherwise initiate method count()
 func (s Snils) CheckAndCount() (bool, error) {
 
 	re, err := regexp.Compile(`^(\d{3})[ -]*(\d{3})[ -]*(\d{3})[ -]*(\d{2})\s*$`) // checking regexp validity
@@ -32,6 +35,7 @@ func (s Snils) CheckAndCount() (bool, error) {
 	return s.count(snils, checkSum), nil
 }
 
+// Method count counts SNILS and compares it to checkSum
 func (s Snils) count(snils, checkSum string) bool {
 	var sum int
 
@@ -55,6 +59,7 @@ func (s Snils) count(snils, checkSum string) bool {
 	return false
 }
 
+// Func checkSnils can be used to mock interface
 func checkSnils(snils Checker) (bool, error) {
 	return snils.CheckAndCount()
 }
