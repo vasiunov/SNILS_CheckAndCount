@@ -2,58 +2,59 @@ package snils
 
 import (
 	"errors"
+	"regexp"
 	"strconv"
-	"strings"
-	"unicode"
 )
 
-func CheckAndCount(snils string) (bool, error) {
+type Checker interface {
+	CheckAndCount() (bool, error)
+}
 
-	// ADD: Проверка контрольного числа Страхового номера проводится только для номеров больше номера 001-001-998.
+type Snils string
 
-	if len(snils) != 14 {
-		err := errors.New("неверная длинна СНИЛС")
+func (s Snils) CheckAndCount() (bool, error) {
+
+	re, err := regexp.Compile(`^(\d{3})[ -]*(\d{3})[ -]*(\d{3})[ -]*(\d{2})\s*$`) // checking regexp validity
+	if err != nil {
 		return false, err
 	}
 
-	//  Q: Есть ли готовая возможность задать маску для строки по аналогии с time layouts?
-
-	for _, elem := range snils {
-		if unicode.IsLetter(elem) {
-			err := errors.New("недопустимый символ в СНИЛС")
-			return false, err
-		}
+	matched := re.MatchString(string(s)) // checking snils validity
+	if !matched {
+		return matched, errors.New("invalid SNILS format") // CODE REVIEW NEEDED
 	}
 
-	return count(snils), nil
+	re.FindStringSubmatch(string(s)) // getting string slice of regexp groups (len == 5)
+
+	checkSum := re.FindStringSubmatch(string(s))[4]
+	snils := re.FindStringSubmatch(string(s))[1] + re.FindStringSubmatch(string(s))[2] + re.FindStringSubmatch(string(s))[3]
+
+	return s.count(snils, checkSum), nil
 }
 
-func count(snils string) bool {
-
-	snilsLeft := snils[:11]
-	snilsLeft = strings.ReplaceAll(snilsLeft, "-", "")
-
+func (s Snils) count(snils, checkSum string) bool {
 	var sum int
 
-	controlSum, _ := strconv.Atoi(string(snils[12:]))
+	checkSumInt, _ := strconv.Atoi(checkSum)
 
 	// 112233445 - snils
 	// 012345678 - i
 	// 987654321 - multiplier
-	for i, value := range snilsLeft {
-
+	for i, value := range snils {
 		sum += int(value-'0') * (9 - i)
 	}
 
-	sumCheck := sum % 101
-
-	switch sumCheck {
+	switch sum % 101 {
 	case 100:
-		sumCheck = 0
+		sum = 0
 		fallthrough
-	case controlSum:
+	case checkSumInt:
 		return true
 	}
 
 	return false
+}
+
+func checkSnils(snils Checker) (bool, error) {
+	return snils.CheckAndCount()
 }
