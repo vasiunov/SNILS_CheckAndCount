@@ -43,7 +43,7 @@ func (s Snils) CheckAndCount() (bool, error) {
 	snils := re.FindStringSubmatch(string(s))[1] + re.FindStringSubmatch(string(s))[2] + re.FindStringSubmatch(string(s))[3]
 
 	if snilsInt, _ := strconv.Atoi(snils); snilsInt <= 1001998 {
-		return true, errors.New("Checking SNILS is carried out only for numbers larger than the number 001-001-998")
+		return true, errors.New("checking SNILS is carried out only for numbers larger than the number 001-001-998")
 	}
 
 	return s.count(snils, checkSum), nil
