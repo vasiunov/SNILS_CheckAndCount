@@ -7,34 +7,33 @@ Play code https://go.dev/play/p/IMrxtpMOagJ.
 package snils
 
 import (
-	"errors"
+	"fmt"
 	"regexp"
 	"strconv"
 )
 
-// Checker interface implements CheckAndCount() (bool, error)
+// Checker interface implements CheckAndCount() error
 type Checker interface {
-	CheckAndCount() (bool, error)
+	CheckAndCount() error
 }
 
 // type Snils contains string value
 type Snils string
 
 /*
-CheckAndCount checks regexp validity and SNILS validity to regexp.
-Returns false and error (containing result of checking).
-Otherwise initiate method count() which counts SNILS and compares it to checkSum returning bool
+Method CheckAndCount checks regexp validity and SNILS validity to regexp. Returns wrapped error.
+Otherwise (err == nil) initiate method count() which counts SNILS and compares it to checkSum returning wrapped error or nil.
 */
-func (s Snils) CheckAndCount() (bool, error) {
+func (s Snils) CheckAndCount() error {
 
 	re, err := regexp.Compile(`^(\d{3})[ -]*(\d{3})[ -]*(\d{3})[ -]*(\d{2})\s*$`) // checking regexp validity
 	if err != nil {
-		return false, err
+		return fmt.Errorf("report the administrator %w", err)
 	}
 
 	matched := re.MatchString(string(s)) // checking snils validity
 	if !matched {
-		return matched, errors.New("invalid SNILS format") // CODE REVIEW NEEDED
+		return fmt.Errorf("invalid SNILS format")
 	}
 
 	re.FindStringSubmatch(string(s)) // getting string slice of regexp groups (len == 5)
@@ -43,14 +42,14 @@ func (s Snils) CheckAndCount() (bool, error) {
 	snils := re.FindStringSubmatch(string(s))[1] + re.FindStringSubmatch(string(s))[2] + re.FindStringSubmatch(string(s))[3]
 
 	if snilsInt, _ := strconv.Atoi(snils); snilsInt <= 1001998 {
-		return true, errors.New("Checking SNILS is carried out only for numbers larger than the number 001-001-998")
+		return fmt.Errorf("checking SNILS is carried out only for numbers larger than the number 001-001-998")
 	}
 
-	return s.count(snils, checkSum), nil
+	return s.count(snils, checkSum)
 }
 
-// Method count counts SNILS and compares it to checkSum
-func (s Snils) count(snils, checkSum string) bool {
+// Method count counts SNILS and compares it to checkSum. Returns wrapped error or nil.
+func (s Snils) count(snils, checkSum string) error {
 	var sum int
 
 	checkSumInt, _ := strconv.Atoi(checkSum)
@@ -67,13 +66,13 @@ func (s Snils) count(snils, checkSum string) bool {
 		sum = 0
 		fallthrough
 	case checkSumInt:
-		return true
+		return nil
 	}
 
-	return false
+	return fmt.Errorf("SNILS doesn't match")
 }
 
 // Func checkSnils can be used to mock interface
-func checkSnils(snils Checker) (bool, error) {
+func checkSnils(snils Checker) error {
 	return snils.CheckAndCount()
 }

@@ -7,7 +7,7 @@ According to http://www.consultant.ru/document/cons_doc_LAW_142584/1d9155a863a59
 
 Manual check SNILS http://portal.fss.ru:8585/fss/lgot/snils
 
-Play code https://go.dev/play/p/n8-IBgC4oSN
+Play code https://go.dev/play/p/6NjgTB2w6-0
 
 ## Example
 
@@ -20,13 +20,14 @@ import (
 )
 func main() {
       
-	snils1 := Snils("11223344595")                               // true <nil>
-	snils2 := Snils("112-233-445 95")                            // true <nil>
-	snils3 := Snils("112 - - -233 - - - -445 - - - -95")         // true <nil>
-	snils4 := Snils("112 - - -233")                              // false invalid SNILS format
-	snils5 := Snils("112 - - -233dd1d31dc - - - -445 - - - -95") // false invalid SNILS format
-	snils6 := Snils("112 - - -233 - - - -445 - - - -96")         // false <nil>
-	snils6 := Snils("001-001-998 00")        					 // true Checking SNILS is carried out only for numbers larger than the number 001-001-998
+	snils1 := Snils("11223344595")                               // <nil>
+	snils2 := Snils("112-233-445 95")                            // <nil>
+	snils3 := Snils("112 - - -233 - - - -445 - - - -95")         // <nil>
+	snils4 := Snils("112 - - -233")                              // invalid SNILS format
+	snils5 := Snils("112 - - -233dd1d31dc - - - -445 - - - -95") // invalid SNILS format
+	snils6 := Snils("112 - - -233 - - - -445 - - - -96")         // <nil>
+	snils7 := Snils("001-001-998 00")                            // checking SNILS is carried out only for numbers larger than the number 001-001-998
+	snils8 := Snils("001-001-999 00")                            // SNILS doesn't match
 
 	fmt.Println(checkSnils(snils1))
 	fmt.Println(checkSnils(snils2))
@@ -35,6 +36,7 @@ func main() {
 	fmt.Println(checkSnils(snils5))
 	fmt.Println(checkSnils(snils6))
 	fmt.Println(checkSnils(snils7))
+	fmt.Println(checkSnils(snils8))
 	
 }
 ```
