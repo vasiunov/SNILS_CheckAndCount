@@ -7,7 +7,7 @@ According to http://www.consultant.ru/document/cons_doc_LAW_142584/1d9155a863a59
 
 Manual check SNILS http://portal.fss.ru:8585/fss/lgot/snils
 
-Play code https://go.dev/play/p/6NjgTB2w6-0
+Play code https://go.dev/play/p/Chvj-DWXjI4
 
 ## Example
 
@@ -19,13 +19,13 @@ import (
   "github.com/vasiunov/features/pkg/snils"
 )
 func main() {
-      
+
 	snils1 := Snils("11223344595")                               // <nil>
 	snils2 := Snils("112-233-445 95")                            // <nil>
 	snils3 := Snils("112 - - -233 - - - -445 - - - -95")         // <nil>
 	snils4 := Snils("112 - - -233")                              // invalid SNILS format
 	snils5 := Snils("112 - - -233dd1d31dc - - - -445 - - - -95") // invalid SNILS format
-	snils6 := Snils("112 - - -233 - - - -445 - - - -96")         // <nil>
+	snils6 := Snils("112 - - -233 - - - -446 - - - -96")         // <nil>
 	snils7 := Snils("001-001-998 00")                            // checking SNILS is carried out only for numbers larger than the number 001-001-998
 	snils8 := Snils("001-001-999 00")                            // SNILS doesn't match
 
@@ -37,6 +37,6 @@ func main() {
 	fmt.Println(checkSnils(snils6))
 	fmt.Println(checkSnils(snils7))
 	fmt.Println(checkSnils(snils8))
-	
+
 }
 ```

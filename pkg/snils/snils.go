@@ -2,7 +2,7 @@
 Package snils Realising Algorithm of checking the control number of the Insurance number (SNILS).
 According to http://www.consultant.ru/document/cons_doc_LAW_142584/1d9155a863a5949b14b95ecbb536aa84856a2a2e/.
 Manual check SNILS http://portal.fss.ru:8585/fss/lgot/snils.
-Play code https://go.dev/play/p/IMrxtpMOagJ.
+Play code https://go.dev/play/p/Chvj-DWXjI4.
 */
 package snils
 
@@ -26,14 +26,16 @@ Otherwise (err == nil) initiate method count() which counts SNILS and compares i
 */
 func (s Snils) CheckAndCount() error {
 
-	re, err := regexp.Compile(`^(\d{3})[ -]*(\d{3})[ -]*(\d{3})[ -]*(\d{2})\s*$`) // checking regexp validity
+	regexpStr := "^(\\d{3})[ -]*(\\d{3})[ -]*(\\d{3})[ -]*(\\d{2})\\s*$"
+
+	re, err := regexp.Compile(regexpStr) // checking regexp validity
 	if err != nil {
-		return fmt.Errorf("report the administrator %w", err)
+		return fmt.Errorf("failed compile regex: %s", regexpStr)
 	}
 
 	matched := re.MatchString(string(s)) // checking snils validity
 	if !matched {
-		return fmt.Errorf("invalid SNILS format")
+		return fmt.Errorf("invalid SNILS format: %s", s)
 	}
 
 	re.FindStringSubmatch(string(s)) // getting string slice of regexp groups (len == 5)
@@ -69,7 +71,7 @@ func (s Snils) count(snils, checkSum string) error {
 		return nil
 	}
 
-	return fmt.Errorf("SNILS doesn't match")
+	return fmt.Errorf("SNILS doesn't match. SNILS: %s", s)
 }
 
 // Func checkSnils can be used to mock interface
